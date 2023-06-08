@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">School Database Management System</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('index') }}">Student Details</a>
+        </li>
+        {% if not logged_in: %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+
+<h3 class='text-center text-muted mb-3'>Student Details</h3>
+<p class='text-right'><a href="{{ url_for('add_user') }}" class='btn btn-success'>+Add User</a></p>
+
+<table class='table table-bordered'>
+  <thead>
+    <tr>
+      <th>Sr no</th>
+      <th>Rollno</th>
+      <th>Name</th>
+      <th>Contact</th>
+      <th>Email</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in datas %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ row.Rollno }}</td>
+      <td>{{ row.Name }}</td>
+      <td>{{ row.Contact}}</td>
+      <td>{{ row.emailID }}</td>
+      <td><a href='{{ url_for("edit_user", rollno=row.Rollno) }}' class='btn btn-primary'>Edit</a></td>
+      <td><a href='{{ url_for("delete_user", rollno=row.Rollno) }}' class='btn btn-danger'
+          onclick='return confirm("Are You Sure")'>Delete</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
